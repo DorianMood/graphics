@@ -12,6 +12,14 @@ const g: Graph<string> = {
         {
           nodes: [],
           value: "2"
+        },
+        {
+          nodes: [],
+          value: "5"
+        },
+        {
+          nodes: [],
+          value: "6"
         }
       ],
       value: "1",

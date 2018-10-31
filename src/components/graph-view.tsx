@@ -17,7 +17,7 @@ export const map = (g: Graph<string>, shiftX: number = width, shiftY: number = w
         nodes =
             <g>
                 {g.nodes.map(
-                    (node, index) => map(node, shiftX + width * depth, shiftY + width * index, depth + 1)
+                    (node, index) => map(node, shiftX + width * depth, shiftY + width * (index + depth), depth + 1)
                 )}
             </g>
     }
