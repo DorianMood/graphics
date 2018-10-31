@@ -5,7 +5,7 @@ import './App.css';
 import { GraphView } from './components/graph-view';
 import { Graph } from './helpers/Graph';
 
-const g: Graph<string> = {
+const graphContent: Graph<string> = {
   nodes: [
     {
       nodes: [
@@ -45,13 +45,14 @@ const g: Graph<string> = {
   ],
   value: "0",
 }
+
 class App extends React.Component {
   public render() {
 
 
     return (
       <div className="App">
-        <GraphView graphData={g} />
+        <GraphView graphData={graphContent} />
       </div>
     );
   }
