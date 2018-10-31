@@ -7,12 +7,18 @@ const WIDTH = 1000;
 
 export const GraphView = (props: { graphData: Graph<string> }) => (
     <svg width={WIDTH} height={HEIGHT}>
-        {map(props.graphData, circleRadius, HEIGHT / 2, 1, WIDTH, HEIGHT)}
+        {mapGraph(props.graphData, circleRadius, HEIGHT / 2, 1, WIDTH, HEIGHT)}
     </svg>
 );
 
-export const map = (g: Graph<string>, shiftX: number = circleRadius, shiftY: number = circleRadius, depth: number = 1, width: number, height: number) => {
-    let nodes = <g />;
+export const mapGraph = (
+    g: Graph<string>,
+    shiftX: number = circleRadius, shiftY: number = circleRadius,
+    depth: number = 1,
+    width: number, height: number
+) => {
+
+    let nodes = <></>;
     if (g.nodes.length !== 0) {
         nodes =
             <g>
@@ -21,7 +27,7 @@ export const map = (g: Graph<string>, shiftX: number = circleRadius, shiftY: num
                         return (
                             <g key={index}>
                                 <line x1={shiftX} y1={shiftY} x2={shiftX + 4 * circleRadius} y2={height / g.nodes.length * (index + 0.5)} stroke="green" />
-                                {map(node, shiftX + 4 * circleRadius, height / g.nodes.length * (index + 0.5), depth + 1, width, (index+1)*height / g.nodes.length)}
+                                {mapGraph(node, shiftX + 4 * circleRadius, height / g.nodes.length * (index + 0.5), depth + 1, width, (index + 1) * height / g.nodes.length)}
                             </g>
                         );
                     }
