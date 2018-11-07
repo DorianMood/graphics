@@ -8,6 +8,7 @@ interface IProps {
     id: number;
     onMouseEnter?: any;
     onMouseLeave?: any;
+    display?: boolean;
 }
 
 export class GraphNode extends React.Component<IProps> {
@@ -15,6 +16,8 @@ export class GraphNode extends React.Component<IProps> {
     constructor(props: IProps) {
         super(props);
     }
+
+    public handleMouseEnter = () => this.props.onMouseEnter(this.props.id)
 
     public render() {
         return (
@@ -25,14 +28,21 @@ export class GraphNode extends React.Component<IProps> {
                     r={5 + this.props.radius / 2}
                     fill="green"
                 />
+                {this.props.display ? (
                 <text
                     x={this.props.shiftX - this.props.radius}
                     y={this.props.shiftY + this.props.radius}
                     fill="black"
                 >
                     {this.props.value}
-                </text>
-                <circle cx={this.props.shiftX} cy={this.props.shiftY} r={this.props.radius / 2} />
+                </text>) : <></>}
+                <circle
+                    cx={this.props.shiftX}
+                    cy={this.props.shiftY}
+                    r={this.props.radius / 2}
+                    onMouseEnter={this.handleMouseEnter}
+                    onMouseLeave={this.props.onMouseLeave}
+                />
             </g>
         );
     }

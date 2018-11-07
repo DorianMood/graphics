@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Graph } from 'src/helpers/Graph';
 import { GraphNode } from './graph-node';
+import { Modal } from './modal';
 
 /**
  * TODO:
@@ -22,13 +23,27 @@ interface IProps {
 
 interface IState {
     display: number[];
+    modal: boolean;
 }
 
 export class GraphView extends React.Component<IProps, IState> {
     constructor(props: IProps) {
         super(props);
 
+        this.state = {
+            display: [],
+            modal: false
+        }
+    }
 
+    public onGraphNodeHover = (index: number) => {
+        if (this.state.display.indexOf(index) === -1) {
+            this.setState({ display: [...this.state.display, index] });
+        }
+    }
+
+    public onGraphNodeRelease = () => {
+        this.setState({ display: [] });
     }
 
     public mapGraph = (
@@ -76,22 +91,26 @@ export class GraphView extends React.Component<IProps, IState> {
                     shiftY={shiftY}
                     radius={CIRCLE_RADIUS}
                     id={g.id}
-                    onMouseEnter={(index: number) => {
-                        this.setState({ display: this.state.display.concat([index]) });
-                    }}
-                    onMouseLeave={(index: number) => {
-                        this.setState({ display: [] });
-                    }}
+                    onMouseEnter={this.onGraphNodeHover}
+                    onMouseLeave={this.onGraphNodeRelease}
+                    display={this.state.display.indexOf(g.id) !== -1}
                 />
             </g>
         );
     }
 
+    public toggleModal = () => {
+        this.setState({ modal: !this.state.modal })
+    }
+
     public render() {
         return (
+            <>
+            <Modal display={this.state.modal} toggleModal={this.toggleModal} />
             <svg width={WIDTH} height={HEIGHT}>
                 {this.mapGraph(this.props.graphData, CIRCLE_RADIUS, HEIGHT / 2, 1, WIDTH, HEIGHT)}
             </svg>
+            </>
         );
     }
 }
